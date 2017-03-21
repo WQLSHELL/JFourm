@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
@@ -68,7 +65,13 @@ public class UserController extends BaseController {
             model.addAttribute("errorMsg", e.getMessage());
             return "/user/login/register";
         }
-        return "redirect:/user/login/register_success";
+        return "redirect:/user/registerSuccess.action";
+    }
+
+    /* 注册成功， 进行页面跳转 */
+    @RequestMapping("/registerSuccess.action")
+    public String registerSuccess() {
+        return "/user/login/register_success";
     }
 
     /* 用户登录 */
@@ -165,6 +168,50 @@ public class UserController extends BaseController {
         return JSON.toJSONString(response);
     }
 
+    /* 跳转到用户后台 */
+    @RequestMapping("/user_back.action")
+    public String userBack(ModelMap modelMap) {
+        return "/user/profile/user_back";
+    }
+
+    /* 查看用户档案 */
+    @RequestMapping("/profile.action")
+    public String profile() {
+        // Session 中有值
+        return "/user/profile/profile";
+    }
+
+    /* 更新用户档案 */
+    @RequestMapping("/updateProfile.action")
+    public String updateProfile(User user, ModelMap modelMap) {
+        userService.update(user);
+        user = userService.get(user.getId());
+        modelMap.addAttribute("user", user);
+        return "/user/profile/user_back";
+    }
+
+    /* 查看用户收藏的问题 */
+    @RequestMapping("/listAttentionQuestions.action")
+    public String listAttentionQuestions(@RequestParam(name = "pageNo", required = false) Integer pageNo, ModelMap modelMap) {
+        // 分页获取问题
+        Page<Question> page;
+        if (pageNo == null) {
+            page = new Page<>(1);
+        } else {
+            page = new Page<>(pageNo);
+        }
+        User user = (User) modelMap.get("user");
+        page = userService.getUserAttentionQuestion(user, page);
+        modelMap.put("page", page);
+        return "/user/profile/attention_question";
+    }
+
+    /* 查看用户关注的用户 */
+    @RequestMapping("/listAttentionUsers.action")
+    public String listAttentionUsers(ModelMap modelMap) {
+
+        return "/user/profile/attention_user";
+    }
 
     // -------------------------- 页面跳转方法
     /* 跳转到登录页面 */

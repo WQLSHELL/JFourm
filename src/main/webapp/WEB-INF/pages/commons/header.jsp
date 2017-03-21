@@ -29,14 +29,14 @@
                 <c:if test="${not empty(sessionScope.user)}">
                     <div class="item">
                         <div class="ui medium buttons">
-                            <a href="/user/login/register.action" class="ui button" id="headAskQuestion">提问题</a>
+                            <a href="/question/askQuestion.action" class="ui button" id="headAskQuestion">提问题</a>
                             <div class="or"></div>
-                            <a href="/user/login/login.action" class="ui button" id="headSendHeadLine">发头条</a>
+                            <a href="/headLine/addHeadLine.action" class="ui button" id="headSendHeadLine">发头条</a>
                         </div>
                     </div>
                     <div class="item">
                         <img class="ui avatar image" src="/static/image/user.png">
-                        <a href="">${sessionScope.user.nickName}</a>
+                        <a href="/user/user_back.action">${sessionScope.user.nickName}</a>
                         <a class="ui label" href="/user/logout.action">退出</a>
                     </div>
                 </c:if>

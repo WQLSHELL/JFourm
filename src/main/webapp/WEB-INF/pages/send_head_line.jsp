@@ -100,7 +100,7 @@
                     if (!result.status) {
                         alert("请登录之后再发布头条");
                     } else {
-                        window.location = "/question/askQuestion.action";
+                        window.location = "/headLine/addHeadLine.action";
                     }
                 }
             });

@@ -14,12 +14,15 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 @RequestMapping("/question")
+@SessionAttributes(names = {"user"})
 public class QuestionController extends BaseController {
 
     @Autowired
@@ -160,15 +163,27 @@ public class QuestionController extends BaseController {
 
     /* 我的提问 */
     @RequestMapping("/listMyQuestion.action")
-    public String listMyQuestion(Page<Question> page, HttpSession session, Model model) {
-        if (page == null) {
+    public String listMyQuestion(@RequestParam(name = "pageNo", required = false) Integer pageNo, ModelMap modelMap) {
+        Page<Question> page;
+        if (pageNo == null) {
             page = new Page<>(1);
+        } else {
+            page = new Page<>(pageNo);
         }
-        User user = (User) session.getAttribute("user");
+        User user = (User) modelMap.get("user");
         page = questionService.listMyQuestion(page, user);
-        model.addAttribute("page", page);
-        model.addAttribute("pageSize", PropertiesUtil.getIntegerValue(WebConstants.PAGE_SIZE));
-        return "";
+        modelMap.addAttribute("page", page);
+        return "/user/profile/my_ask";
+    }
+
+    /* 关闭问题 */
+    @RequestMapping("/closeQuestion.action")
+    @ResponseBody
+    public String closeQuestion(Integer questionId) {
+        Question question = questionService.get(questionId);
+        question.setQuestionState(0);
+        questionService.update(question);
+        return "success";
     }
 
 }

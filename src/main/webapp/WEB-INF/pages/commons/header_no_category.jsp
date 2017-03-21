@@ -29,9 +29,9 @@
                 <c:if test="${not empty(sessionScope.user)}">
                     <div class="item">
                         <div class="ui medium buttons">
-                            <a href="/user/login/register.action" class="ui button" id="headAskQuestion">提问题</a>
+                            <a href="/question/askQuestion.action" class="ui button" id="headAskQuestion">提问题</a>
                             <div class="or"></div>
-                            <a href="/user/login/login.action" class="ui button" id="headSendHeadLine">发头条</a>
+                            <a href="/headLine/addHeadLine.action" class="ui button" id="headSendHeadLine">发头条</a>
                         </div>
                     </div>
                     <div class="item">
