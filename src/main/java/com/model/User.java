@@ -28,6 +28,7 @@ public class User {
     private String job;     // 职位
     private Timestamp registerTime; // 注册时间
     private Integer score;  // 个人积分
+    private Integer enabled; // 是否被管理员禁用
 
     // 关注的问题分类
     private Set<QuestionCategory> questionCategories = new HashSet<>();
@@ -183,6 +184,15 @@ public class User {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    @Column(name = "enabled", columnDefinition = "int default 0")
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     /* 关注的问题分类， 生成中间表 */

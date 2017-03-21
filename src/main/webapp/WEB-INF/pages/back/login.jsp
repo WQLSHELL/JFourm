@@ -19,7 +19,7 @@
         <div class="three wide column">
             <div class="ui attached message">
                 <div style="text-align: center;font-size: large;margin-bottom: 30px;">
-                    登录
+                    JFourm 后台管理系统登录
                 </div>
                 <c:if test="${errorMsg != null}">
                     <div class="ui red warning message">

@@ -22,7 +22,7 @@
             <div class="two fields">
                 <div class="field">
                     <label>昵称</label>
-                    <input type="text" name="nickName" placeholder="Nick Name" value="${user.nickName}" readonly="readonly" >
+                    <input type="text" name="nickName" placeholder="Nick Name" value="${user.nickName}">
                 </div>
                 <div class="field">
                     <label>性别</label>
@@ -79,6 +79,7 @@
     $(function () {
 
         $("#save").hide();
+        $(":input").attr("readonly", true);
 
         /* 性别 */
         $(":input[type='radio']").each(function () {
@@ -89,10 +90,10 @@
         });
         
         $("#modify").click(function () {
-            $(":input[type='radio']").attr("readonly", true);
-            $(":input[type='text'][name!='nickName']").attr("readonly", true);
-            $(":input[type='url']").attr("readonly", true);
-            $(":input[type='number']").attr("readonly", true);
+            $(":input[type='radio']").attr("readonly", false);
+            $(":input[type='text'][name!='nickName']").attr("readonly", false);
+            $(":input[type='url']").attr("readonly", false);
+            $(":input[type='number']").attr("readonly", false);
             $("#modify").hide();
             $("#save").show();
         });

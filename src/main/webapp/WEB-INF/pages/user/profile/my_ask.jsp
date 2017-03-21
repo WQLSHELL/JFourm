@@ -34,7 +34,7 @@
 <script>
     $(function () {
 
-        /* 删除评论 */
+        /* 关闭问题 */
         $(".ui.label.delete").click(function () {
             var $this = $(this);
             var href = $this.attr("target");

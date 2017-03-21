@@ -213,6 +213,16 @@ public class UserController extends BaseController {
         return "/user/profile/attention_user";
     }
 
+    /* 禁用用户 */
+    @RequestMapping("/closeUser.action")
+    @ResponseBody
+    public String closeUser(Integer userId) {
+        User user = userService.get(userId);
+        user.setEnabled(0);
+        userService.update(user);
+        return "success";
+    }
+
     // -------------------------- 页面跳转方法
     /* 跳转到登录页面 */
     @RequestMapping("/login/login.action")

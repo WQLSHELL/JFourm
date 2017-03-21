@@ -5,19 +5,15 @@ import com.model.QuestionCategory;
 import com.model.User;
 import com.service.QuestionCategoryService;
 import com.service.QuestionService;
-import com.system.utils.PropertiesUtil;
-import com.system.utils.WebConstants;
 import com.system.web.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -183,6 +179,15 @@ public class QuestionController extends BaseController {
         Question question = questionService.get(questionId);
         question.setQuestionState(0);
         questionService.update(question);
+        return "success";
+    }
+
+    /* 删除问题 */
+    @RequestMapping("/deleteQuestion.action")
+    @ResponseBody
+    public String deleteQuestion(Integer questionId) {
+        Question question = questionService.get(questionId);
+        questionService.delete(question);
         return "success";
     }
 

@@ -74,7 +74,7 @@ public class UserService extends BaseService<User> {
         dbUser.setCurrentTown(user.getCurrentTown());
         dbUser.setSchool(user.getSchool());
         dbUser.setMajor(user.getMajor());
-        dbUser.setComments(user.getComments());
+        dbUser.setCompany(user.getCompany());
         dbUser.setJob(user.getJob());
         super.update(dbUser);
     }
