@@ -223,6 +223,14 @@ public class UserController extends BaseController {
         return "success";
     }
 
+    /* 显示所有用户 */
+    @RequestMapping("/listAll.action")
+    public String listAll(ModelMap modelMap) {
+        List<User> users = userService.listAll();
+        modelMap.addAttribute("users", users);
+        return "/back/list_user";
+    }
+
     // -------------------------- 页面跳转方法
     /* 跳转到登录页面 */
     @RequestMapping("/login/login.action")

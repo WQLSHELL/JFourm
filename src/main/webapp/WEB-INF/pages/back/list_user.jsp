@@ -30,18 +30,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Tom</td>
-                <td>tom@gmail.com</td>
-                <td>12</td>
-                <td>12</td>
-                <td>12</td>
-                <td>12</td>
-                <td>2017-01-01 08:00:00</td>
-                <td>
-                    <a class="ui label close" target="/user/closeUser.action?userId=${item.id}">禁用用户</a>
-                </td>
-            </tr>
+            <c:forEach items="${users}" var="item">
+                <tr>
+                    <td>${item.nickName}</td>
+                    <td>${item.email}</td>
+                    <td>${item.comments.size()}</td>
+                    <td>${item.askedQuestions.size()}</td>
+                    <td>${item.headLines.size()}</td>
+                    <td>${item.score}</td>
+                    <td><fmt:formatDate value="${item.registerTime}" pattern="yyyy-MM-dd HH:mm" /></td>
+                    <td>
+                        <a class="ui label close" target="/user/closeUser.action?userId=${item.id}">禁用用户</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

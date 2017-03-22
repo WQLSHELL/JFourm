@@ -17,7 +17,7 @@
     </div>
     <div class="content">
 
-        <form action="/questionCategory/addCategory.action" method="post" class="ui form">
+        <form action="/questionCategory/doAddCategory.action" method="post" class="ui form">
             <div class="field">
                 <label>问题分类名称</label>
                 <input type="text" name="name" />

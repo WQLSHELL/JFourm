@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/headLine")
 @SessionAttributes(names = {"modelType"})
@@ -54,8 +56,16 @@ public class HeadLineController extends BaseController {
     /* 发布头条 */
     @RequestMapping("/addHeadLine.action")
     public String addHeadLine(HeadLine headLine, ModelMap modelMap) {
-
+        // TODO 保存头条， 默认为未审核
         return "/send_head_line";
+    }
+
+    /* 列出待审核的头条 */
+    @RequestMapping("/listUnReview.action")
+    public String listUnReview(ModelMap modelMap) {
+        List<HeadLine> headLines = headLineService.listUnReview();
+        modelMap.addAttribute("headLines", headLines);
+        return "/back/list_head_line";
     }
 
     /* 审核通过头条 */

@@ -46,7 +46,7 @@ public class QuestionCategoryController {
         return "/category_question";
     }
 
-    /* 列出所有问题分类 */
+    /* 列出该用户的所有问题分类 */
     @RequestMapping("/listAll.action")
     public String listAll(ModelMap modelMap) {
         User user = (User) modelMap.get("user");
@@ -63,11 +63,24 @@ public class QuestionCategoryController {
     }
 
     /* 新增问题分类 */
-    @RequestMapping("/addCategory.action")
-    public String addCategory(QuestionCategory questionCategory, ModelMap modelMap) {
+    @RequestMapping("/doAddCategory.action")
+    public String doAddCategory(QuestionCategory questionCategory, ModelMap modelMap) {
         questionCategoryService.save(questionCategory);
         modelMap.addAttribute("message", "成功保存分类");
         return "/back/success";
     }
 
+    /* 列出所有问题分类 */
+    @RequestMapping("/listAllCategory.action")
+    public String listAllCategory(ModelMap modelMap) {
+        List<QuestionCategory> questionCategories = questionCategoryService.listAll();
+        modelMap.addAttribute("questionCategories", questionCategories);
+        return "/back/list_question_category";
+    }
+
+    /* 跳转到新增问题分类页面 */
+    @RequestMapping("/addCategory.action")
+    public String addCategory() {
+        return "/back/add_question_category";
+    }
 }

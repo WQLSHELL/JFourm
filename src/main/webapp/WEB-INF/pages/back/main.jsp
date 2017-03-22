@@ -32,19 +32,19 @@
                 <a href="/site/siteStatus.action" class="item">
                     网站状态
                 </a>
-                <a class="item">
+                <a href="/question/listAll.action" class="item">
                     查看问题
                 </a>
-                <a class="item">
+                <a href="/user/listAll.action" class="item">
                     查看用户
                 </a>
-                <a class="item">
+                <a href="/headLine/listUnReview.action" class="item">
                     审核头条
                 </a>
-                <a class="item">
+                <a href="/questionCategory/listAllCategory.action" class="item">
                     查看问题分类
                 </a>
-                <a class="item">
+                <a href="/questionCategory/addCategory.action" class="item">
                     添加问题分类
                 </a>
                 <%--<a class="item">

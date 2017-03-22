@@ -22,9 +22,7 @@ public class HeadLineService extends BaseService<HeadLine> {
         super.setDao(dao);
     }
 
-    /**
-     * 获取最新的头条
-     */
+    /* 获取最新的头条 */
     public Page<HeadLine> listLast(Page<HeadLine> page) {
         Integer totalItem = headLineDAO.countAll();
         page.setTotalItem(totalItem);
@@ -33,9 +31,7 @@ public class HeadLineService extends BaseService<HeadLine> {
         return page;
     }
 
-    /**
-     * 获取最热的头条
-     */
+    /* 获取最热的头条 */
     public Page<HeadLine> listHot(Page<HeadLine> page) {
         Integer totalItem = headLineDAO.countHot();
         page.setTotalItem(totalItem);
@@ -44,17 +40,16 @@ public class HeadLineService extends BaseService<HeadLine> {
         return page;
     }
 
-    /**
-     * 获取最热的前10条
-     * 显示在主页
-     */
+    /* 获取最热的前10条 显示在主页 */
     public List<HeadLine> listTopTen() {
         return headLineDAO.listTopTen();
     }
 
-    /**
-     * 更新头条浏览量
-     */
+    /* 列出未审核的头条 */
+    public List<HeadLine> listUnReview() {
+        return headLineDAO.listUnReview();
+    }
+
 
 
 }
