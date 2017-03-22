@@ -29,18 +29,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Semantic UI中文官方网站</td>
-                <td>5</td>
-                <td>开启</td>
-                <td>佚名</td>
-                <td>前端</td>
-                <td>2017-01-01</td>
-                <td>
-                    <a class="ui label close" target="/question/closeQuestion.action?questionId=${item.id}">关闭问题</a>
-                    <a class="ui label delete" target="/question/deleteQuestion.action?questionId=${item.id}">删除问题</a>
-                </td>
-            </tr>
+            <c:forEach items="${questions}" var="item">
+                <tr>
+                    <td>${item.title}</td>
+                    <td>${item.answerNum}</td>
+                    <td>${item.questionState}</td>
+                    <td>${item.user.nickName}</td>
+                    <td>${item.category.name}</td>
+                    <td><fmt:formatDate value="${item.submitTime}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
+                    <td>
+                        <a class="ui label close" target="/question/closeQuestion.action?questionId=${item.id}">关闭问题</a>
+                        <a class="ui label delete" target="/question/deleteQuestion.action?questionId=${item.id}">删除问题</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>
@@ -53,12 +55,12 @@
             var $this = $(this);
             var href = $this.attr("target");
             $.get(href, function () {
-                $this.parent().parens().hide();
+                $this.parent().parens().find("td").eq("2").html("关闭");
             });
             return false;
         });
 
-        /* 关闭问题 */
+        /* 删除问题 */
         $(".ui.label.delete").click(function () {
             var $this = $(this);
             var href = $this.attr("target");

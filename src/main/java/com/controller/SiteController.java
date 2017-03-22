@@ -81,4 +81,12 @@ public class SiteController extends BaseController {
         return JSON.toJSONString(response);
     }
 
+    /* 查看网站状态 */
+    @RequestMapping("/siteStatus.action")
+    public String siteStatus(ModelMap modelMap) {
+        // TODO 获取操作系统信息
+        // TODO 获取用户量，问题数， 头条数，等等
+        return "/back/site_status";
+    }
+
 }

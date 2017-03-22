@@ -191,4 +191,12 @@ public class QuestionController extends BaseController {
         return "success";
     }
 
+    /* 列出所有问题 */
+    @RequestMapping("/listAll.action")
+    public String listAll(ModelMap modelMap) {
+        List<Question> questions = questionService.listAll();
+        modelMap.addAttribute("questions", questions);
+        return "/back/list_question";
+    }
+
 }

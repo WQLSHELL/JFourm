@@ -6,9 +6,7 @@ import com.system.web.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/headLine")
@@ -56,7 +54,18 @@ public class HeadLineController extends BaseController {
     /* 发布头条 */
     @RequestMapping("/addHeadLine.action")
     public String addHeadLine(HeadLine headLine, ModelMap modelMap) {
+
         return "/send_head_line";
+    }
+
+    /* 审核通过头条 */
+    @RequestMapping("/reviewPassed.action")
+    @ResponseBody
+    public String reviewPassed(Integer headLineId) {
+        HeadLine headLine = headLineService.get(headLineId);
+        headLine.setStatus(1);
+        headLineService.update(headLine);
+        return "success";
     }
 
 }

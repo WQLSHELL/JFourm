@@ -16,6 +16,7 @@ public class HeadLine {
     private String description; // 描述
     private Integer viewNum;  //  浏览量: 通过浏览量进行最热头条分析
     private Timestamp submitTime;   // 发表时间
+    private Integer status; // 0：未通过审核； 1：通过审核
 //    private HeadLineCategory category;    //所属分类
     private User user;  // 谁发布的
 
@@ -68,6 +69,15 @@ public class HeadLine {
     @Column(name = "submit_time", columnDefinition = "timestamp default current_timestamp")
     public Timestamp getSubmitTime() {
         return submitTime;
+    }
+
+    @Column(name = "status", columnDefinition = "int default 0")
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public void setSubmitTime(Timestamp submitTime) {

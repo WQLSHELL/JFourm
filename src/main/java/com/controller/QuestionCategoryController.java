@@ -62,4 +62,12 @@ public class QuestionCategoryController {
         return "/list_question_category";
     }
 
+    /* 新增问题分类 */
+    @RequestMapping("/addCategory.action")
+    public String addCategory(QuestionCategory questionCategory, ModelMap modelMap) {
+        questionCategoryService.save(questionCategory);
+        modelMap.addAttribute("message", "成功保存分类");
+        return "/back/success";
+    }
+
 }

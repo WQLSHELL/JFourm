@@ -1,0 +1,34 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/semantic.min.css">
+    <script src="/static/js/jquery.js" charset="UTF-8"></script>
+    <script src="/static/js/semantic.min.js" charset="UTF-8"></script>
+</head>
+<body>
+
+<div class="ui card" style="width: 98%;">
+    <div class="content">
+        <div class="header">添加问题分类</div>
+    </div>
+    <div class="content">
+
+        <form action="/questionCategory/addCategory.action" method="post" class="ui form">
+            <div class="field">
+                <label>问题分类名称</label>
+                <input type="text" name="name" />
+            </div>
+            <button class="ui button" type="submit">保存</button>
+        </form>
+    </div>
+
+    <a href="/q"></a>
+    
+</div>
+
+</body>
+</html>
