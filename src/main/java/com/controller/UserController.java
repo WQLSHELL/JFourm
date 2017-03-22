@@ -209,7 +209,6 @@ public class UserController extends BaseController {
     /* 查看用户关注的用户 */
     @RequestMapping("/listAttentionUsers.action")
     public String listAttentionUsers(ModelMap modelMap) {
-
         return "/user/profile/attention_user";
     }
 

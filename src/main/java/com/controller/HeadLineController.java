@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.model.HeadLine;
+import com.model.User;
 import com.service.HeadLineService;
 import com.system.web.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,11 +54,20 @@ public class HeadLineController extends BaseController {
         return "/list_head_line";
     }
 
-    /* 发布头条 */
+    /* 跳转到发布头条 */
     @RequestMapping("/addHeadLine.action")
-    public String addHeadLine(HeadLine headLine, ModelMap modelMap) {
-        // TODO 保存头条， 默认为未审核
+    public String addHeadLine() {
         return "/send_head_line";
+    }
+
+    /* 保存头条 */
+    @RequestMapping("/saveHeadline.action")
+    public String saveHeadLine(HeadLine headLine, ModelMap modelMap) {
+        User user = (User) modelMap.get("user");
+        headLine.setViewNum(0);
+        headLine.setStatus(0);
+        headLine.setUser(user);
+        return "/success";
     }
 
     /* 列出待审核的头条 */
