@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: WuQinglong
-  Date: 2017/3/10
-  Time: 16:33
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
@@ -19,6 +12,7 @@
 <div class="ui grid">
 
     <%@ include file="../../commons/header.jsp"%>
+    <%@ include file="../../commons/question_categroy_menu.jsp"%>
 
     <div class="row" style="margin-top: 50px;">
 

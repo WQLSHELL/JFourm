@@ -18,14 +18,23 @@
     </div>
     <div class="content">
         <table class="ui celled table">
+            <thead>
+            <tr>
+                <th>标题</th>
+                <th>回答数</th>
+                <th>提出时间</th>
+                <th>问题状态</th>
+                <th>操作</th>
+            </tr>
+            </thead>
             <tbody>
                 <c:forEach items="${page.list}" var="item">
                     <tr>
-                        <td><span class="ui label">${item.answerNum} 回答</span></td>
                         <td><a href="">${item.title}</a></td>
-                        <td>${item.questionStatus == 1? "开启":"关闭"}</td>
+                        <td><span class="ui label">${item.answerNum} 回答</span></td>
                         <td><fmt:formatDate value="${item.submitTime}" pattern="yyyy-MM-dd" /></td>
-                        <td><a class="ui button close" href="" data-value="${item.id}">关闭问题</a></td>
+                        <td>${item.questionStatus == 1? "开启":"关闭"}</td>
+                        <td><a class="ui button delete" target="/user/unFavoriteQuestion.action" data-value="${item.id}">取消关注</a></td>
                     </tr>
                 </c:forEach>
             </tbody>
@@ -36,16 +45,17 @@
     $(function () {
 
         /* 关闭问题 */
-        $(".ui.button.close").click(function () {
+        $(".ui.button.delete").click(function () {
             var $this = $(this);
             var questionId = $this.attr("data-value");
+            var targetVal = $this.attr("target");
             $.ajax({
-                url: "/question/closeQuestion.action",
+                url: targetVal,
                 type: "post",
                 data: {"questionId":questionId},
-                success: function (data) {
-                    alert("关闭成功");
-                    $this.parent().prev().prev().html("关闭");
+                success: function () {
+                    alert("取消关注成功");
+                    $this.parent().parent().hide();
                 }
             });
         });

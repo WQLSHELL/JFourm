@@ -20,7 +20,7 @@ public class Admin {
         this.id = id;
     }
 
-    @Column(name = "userName", nullable = false, unique = true)
+    @Column(name = "userName")
     public String getUserName() {
         return userName;
     }
@@ -29,7 +29,7 @@ public class Admin {
         this.userName = userName;
     }
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }

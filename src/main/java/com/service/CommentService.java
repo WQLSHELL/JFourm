@@ -8,7 +8,6 @@ import com.system.web.Page;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,16 +24,14 @@ public class CommentService extends BaseService<Comment> {
         super.setDao(dao);
     }
 
-    /* 评论点赞 */
-    @Transactional
-    public void addLikeNum(Comment comment) {
-        comment = commentDAO.get(comment.getId());
-        comment.setLikeNum(comment.getLikeNum() + 1);
-        commentDAO.update(comment);
-    }
+    /**
+     * 列出我的回复
+     */
+    public Page<Comment> listMyComments(User user, Page<Comment> page) {
 
-    /* 列出我的回复 */
-    public Page<Comment> listMyAnswers(User user, Page<Comment> page) {
+        Integer totalItem = commentDAO.countMyCommentsNum(user);
+        page.setTotalItem(totalItem);
+
         List<Comment> list = commentDAO.listMyAnswer(user, page);
         for (Comment comment : list)
             Hibernate.initialize(comment.getQuestion());

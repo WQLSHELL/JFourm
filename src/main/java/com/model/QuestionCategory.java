@@ -57,7 +57,7 @@ public class QuestionCategory {
     }
 
     /* 被那些用户关注， 关系由用户维护 */
-    @ManyToMany(targetEntity = User.class, mappedBy = "questionCategories", fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = User.class, mappedBy = "attentionQuestionCategories", fetch = FetchType.LAZY)
     public Set<User> getUsers() {
         return users;
     }

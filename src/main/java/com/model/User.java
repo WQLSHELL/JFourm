@@ -22,22 +22,19 @@ public class User {
     private String email;   // 邮箱
     private String currentTown; // 现居城市
     private String personUrl;   // 个人主页
-    private String school;  // 毕业院校
-    private String major;   // 专业
-    private String company; // 所在公司
-    private String job;     // 职位
     private Timestamp registerTime; // 注册时间
     private Integer score;  // 个人积分
-    private Integer enabled; // 是否被管理员禁用
 
     // 关注的问题分类
-    private Set<QuestionCategory> questionCategories = new HashSet<>();
+    private Set<QuestionCategory> attentionQuestionCategories = new HashSet<>();
     // 关注的问题
     private Set<Question> attentionQuestions = new HashSet<>();
+
     // 提问的问题
     private Set<Question> askedQuestions = new HashSet<>();
     // 用户的评论
     private Set<Comment> comments = new HashSet<>();
+
     // 发布的头条
     private Set<HeadLine> headLines = new HashSet<>();
 
@@ -132,42 +129,6 @@ public class User {
         this.personUrl = personUrl;
     }
 
-    @Column(name = "school")
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
-
-    @Column(name = "major")
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    @Column(name = "company")
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    @Column(name = "job")
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
     @Column(name = "register_time", columnDefinition = "timestamp default current_timestamp")
     public Timestamp getRegisterTime() {
         return registerTime;
@@ -186,26 +147,17 @@ public class User {
         this.score = score;
     }
 
-    @Column(name = "enabled", columnDefinition = "int default 0")
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
-    }
-
     /* 关注的问题分类， 生成中间表 */
     @ManyToMany(targetEntity = QuestionCategory.class, fetch = FetchType.LAZY)
     @JoinTable(name = "user_attention_question_category",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "question_category_id")})
-    public Set<QuestionCategory> getQuestionCategories() {
-        return questionCategories;
+    public Set<QuestionCategory> getAttentionQuestionCategories() {
+        return attentionQuestionCategories;
     }
 
-    public void setQuestionCategories(Set<QuestionCategory> questionCategories) {
-        this.questionCategories = questionCategories;
+    public void setAttentionQuestionCategories(Set<QuestionCategory> attentionQuestionCategories) {
+        this.attentionQuestionCategories = attentionQuestionCategories;
     }
 
     /* 关注的问题， 生成中间表 */

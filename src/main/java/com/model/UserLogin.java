@@ -16,6 +16,7 @@ public class UserLogin {
     private Integer userSource; // 用户来源. 1. 邮箱用户; 2. QQ; 3: 微信 (2,3暂定不实现)
     private Integer emailValidated;  //  邮箱用户是否经过验证, 0:否; 1:是
     private String emailSign;  // 用户邮箱签名, 唯一约束
+    private Integer enabled; // 是否禁用用户 1：启用； 0：禁用
     private User user;  // 关联用户主表
 
     @Id
@@ -71,6 +72,15 @@ public class UserLogin {
 
     public void setEmailSign(String emailSign) {
         this.emailSign = emailSign;
+    }
+
+    @Column(name = "enabled")
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     /* 可以通过 mappedBy 来维护外键关系, 哪个实体类中定义了外键, 哪个实体类就维护外键关系 */

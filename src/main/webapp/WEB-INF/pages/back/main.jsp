@@ -29,22 +29,22 @@
     <div class="row">
         <div class="two wide column">
             <div class="ui vertical menu" style="margin-left: 10px;">
-                <a href="/site/siteStatus.action" class="item">
+                <a target="/site/siteStatus.action" class="item">
                     网站状态
                 </a>
-                <a href="/question/listAll.action" class="item">
+                <a target="/question/listAll.action" class="item">
                     查看问题
                 </a>
-                <a href="/user/listAll.action" class="item">
+                <a target="/user/listAll.action" class="item">
                     查看用户
                 </a>
-                <a href="/headLine/listUnReview.action" class="item">
+                <a target="/headLine/listUnReview.action" class="item">
                     审核头条
                 </a>
-                <a href="/questionCategory/listAllCategory.action" class="item">
+                <a target="/questionCategory/listAllCategory.action" class="item">
                     查看问题分类
                 </a>
-                <a href="/questionCategory/addCategory.action" class="item">
+                <a target="/questionCategory/addCategory.action" class="item">
                     添加问题分类
                 </a>
                 <%--<a class="item">

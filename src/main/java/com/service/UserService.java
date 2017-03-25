@@ -2,11 +2,15 @@ package com.service;
 
 import com.dao.BaseDAO;
 import com.dao.UserDAO;
+import com.dao.UserLoginDAO;
 import com.exception.UserRegisterException;
 import com.model.Question;
 import com.model.QuestionCategory;
 import com.model.User;
 import com.model.UserLogin;
+import com.system.utils.MD5Util;
+import com.system.utils.PropertiesUtil;
+import com.system.utils.WebConstants;
 import com.system.web.Page;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,12 @@ public class UserService extends BaseService<User> {
 
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private UserLoginDAO userLoginDAO;
+    @Autowired
+    private QuestionService questionService;
+    @Autowired
+    private QuestionCategoryService questionCategoryService;
 
     @Resource(name = "userDAO")
     @Override
@@ -48,8 +58,8 @@ public class UserService extends BaseService<User> {
     public Set<QuestionCategory> getUserQuestionCategories(User user) {
         User dbUser = userDAO.get(user.getId());
         // 实例化代理对象
-        Hibernate.initialize(dbUser.getQuestionCategories());
-        return dbUser.getQuestionCategories();
+        Hibernate.initialize(dbUser.getAttentionQuestionCategories());
+        return dbUser.getAttentionQuestionCategories();
     }
 
     /* 分页获取用户关注的问题 */
@@ -72,10 +82,70 @@ public class UserService extends BaseService<User> {
         dbUser.setPersonUrl(user.getPersonUrl());
         dbUser.setMobile(user.getMobile());
         dbUser.setCurrentTown(user.getCurrentTown());
-        dbUser.setSchool(user.getSchool());
-        dbUser.setMajor(user.getMajor());
-        dbUser.setCompany(user.getCompany());
-        dbUser.setJob(user.getJob());
         super.update(dbUser);
+    }
+
+    /* 实例化用户关联对象 */
+    public void initialize(User user) {
+
+        Hibernate.initialize(user.getComments());
+        Hibernate.initialize(user.getAskedQuestions());
+        Hibernate.initialize(user.getAttentionQuestions());
+        Hibernate.initialize(user.getHeadLines());
+
+    }
+
+    /**
+     * 保存用户
+     */
+    @Transactional
+    public void save(User user, UserLogin userLogin) {
+        // 保存用户信息
+        user.setScore(0);
+        userDAO.save(user);
+
+        // 保存用户登录信息
+        String salt = PropertiesUtil.getStringValue(WebConstants.ENCRYPTION_SALT);
+        String passwordSalt = userLogin.getPassword() + salt;
+        String passwordMD5 = MD5Util.generateMD5(passwordSalt);
+        userLogin.setPassword(passwordMD5);
+        userLogin.setEmailValidated(0);
+        userLogin.setUserSource(1);
+        userLogin.setEnabled(1);
+        userLoginDAO.save(userLogin);
+    }
+
+    @Transactional
+    public void addQuestionCategory(User user, QuestionCategory questionCategory) {
+        user = userDAO.get(user.getId());
+        questionCategory = questionCategoryService.get(questionCategory.getId());
+        user.getAttentionQuestionCategories().add(questionCategory);
+        userDAO.update(user);
+    }
+
+    @Transactional
+    public void deleteQuestionCategory(User user, QuestionCategory questionCategory) {
+        user = userDAO.get(user.getId());
+        questionCategory = questionCategoryService.get(questionCategory.getId());
+        user.getAttentionQuestionCategories().remove(questionCategory);
+        questionCategory.getUsers().remove(user);
+        userDAO.update(user);
+    }
+
+    @Transactional
+    public void addQuestion(User user, Question question) {
+        user = userDAO.get(user.getId());
+        question = questionService.get(question.getId());
+        user.getAttentionQuestions().add(question);
+        userDAO.update(user);
+    }
+
+    @Transactional
+    public void deleteQuestion(User user, Question question) {
+        user = userDAO.get(user.getId());
+        question = questionService.get(question.getId());
+        user.getAttentionQuestions().remove(question);
+        question.getUsers().remove(user);
+        userDAO.update(user);
     }
 }

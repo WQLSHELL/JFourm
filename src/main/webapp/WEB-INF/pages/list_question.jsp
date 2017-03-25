@@ -14,8 +14,12 @@
 
     <%@ include file="commons/header.jsp" %>
 
-    <%-- 从 Request 中取值 --%>
-    <!-- List 问题 -->
+    <div class="row" style="padding: 0px auto;">
+        <div class="sixteen wide column">
+            <div class="ui divider" style="margin: 0px auto;"></div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="three wide column"></div>
         <div class="seven wide column">
@@ -29,17 +33,6 @@
                 </div>
             </div>
 
-            <!-- 小导航 -->
-            <div class="ui secondary pointing menu">
-                <a href="/question/listLastCategoryQuestion.action?categoryId=${questionCategory.id}" class="item"
-                   id="lastQuestion">最新提问</a>
-                <a href="/question/listHotCategoryQuestion.action?categoryId=${questionCategory.id}" class="item"
-                   id="hotQuestion">热门回答</a>
-                <a href="/question/listNoCategoryQuestion.action?categoryId=${questionCategory.id}" class="item"
-                   id="noQuestion">等待回答</a>
-            </div>
-
-
             <!-- 问题列表 -->
             <c:forEach items="${requestScope.page.list}" var="item">
                 <section>
@@ -48,25 +41,19 @@
                             ${item.answerNum} <br>
                         <small>回答</small>
                     </div>
-                    <!-- 浏览量 -->
-                    <div style="width: 40px; height: 45px;text-align: center;float: left;margin: 5px 5px;">
-                            ${item.viewNum} <br>
-                        <small>浏览</small>
-                    </div>
                     <!-- 主要内容 -->
                     <div>
                         <!-- 提问者/回答者 -->
                         <span>${item.user.nickName}&nbsp;&nbsp;1分钟前回答</span>
                         <h5 style="margin: 10px 0px;"></h5>
                         <!-- 提问或者回答的问题 -->
-                        <a href="/question/questionDetail.action?id=${item.id}"
-                           style="color: #0f0f10; font-size: large;">
-                                ${item.title}
+                        <a href="/question/questionDetail.action?id=${item.id}" style="color: #0f0f10; font-size: large;">
+                            ${item.title}
                         </a>
                         <!-- 问题类别 -->
                         <label class="ui label">
-                            <a href="" style="color: #0f0f10">
-                                    ${item.category.name}
+                            <a href="/question/listLastCategoryQuestion.action?categoryId=${item.id}" style="color: #0f0f10">
+                                ${item.category.name}
                             </a>
                         </label>
                     </div>
@@ -106,7 +93,7 @@
         <%-- 从 Session 中取值 --%>
         <div class="three wide column">
             <!-- 最新头条 -->
-            <div class="ui attached message" style="margin-top: 20px;">
+            <div class="ui attached message">
                 <div class="header" style="text-align: center;">
                     最新头条
                 </div>
@@ -132,15 +119,6 @@
         $('.ui.dropdown')
             .dropdown()
         ;
-
-        var typeVal = "${type}";
-        if (typeVal == "hot") {
-            $("#hotQuestion").addClass("active");
-        } else if (typeVal == "no") {
-            $("#noQuestion").addClass("active");
-        } else {
-            $("#lastQuestion").addClass("active");
-        }
 
     });
 

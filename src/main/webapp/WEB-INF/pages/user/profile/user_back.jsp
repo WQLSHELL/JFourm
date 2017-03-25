@@ -12,18 +12,17 @@
 <div class="ui grid">
 
     <%@ include file="../../commons/header.jsp"%>
-    
+    <%@ include file="../../commons/question_categroy_menu.jsp"%>
+
     <div class="row" style="background-color: #f6f6f6;">
         <div class="three wide column"></div>
         <div class="two wide column">
             <img class="ui large circular image" src="/static/image/user.png" style="margin-top: 10px;">
         </div>
         <div class="four wide column">
-            <div style="margin-top: 40px;font-size: xx-large;">${user .nickName}</div>
-            <div style="margin-top: 20px;">${user.score} 积分</div>
+            <div style="margin-top: 40px;font-size: xx-large;">${user.nickName}</div>
+            <div style="margin-top: 20px;">${user.score==0} 积分</div>
             <div style="margin-top: 10px;">${user.currentTown}</div>
-            <div style="margin-top: 10px;">${user.school}</div>
-            <div style="margin-top: 10px;">${user.company}</div>
             <div style="margin-top: 10px;">${user.personUrl}</div>
         </div>
         <div class="four wide column">
@@ -46,12 +45,11 @@
                 <a target="/user/profile.action" class="active item">我的档案 </a>
                 <a target="/question/listMyQuestion.action" class="item">我的提问</a>
                 <a target="/comment/listMyComment.action" class="item">我的评论</a>
-                <a href="javascript:alert('暂未实现该功能');" target="" class="item">我的消息</a>
+                <%--<a target="" class="item">我的消息</a>--%>
                 <a target="/user/listAttentionQuestions.action" class="item">关注的问题</a>
             </div>
         </div>
         <div class="eight wide column">
-            <%-- 错误消息 --%>
             <div id="frame"></div>
         </div>
         <div class="three wide column"></div>

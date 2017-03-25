@@ -24,15 +24,15 @@
                 </div>
                 <div class="content">
                     <div>
-                        <form action="" method="post" class="ui form">
+                        <form action="/question/saveQuestion.action" method="post" class="ui form">
                             <div class="field">
-                                <input type="text" name="" placeholder="标题: 一句话说清楚问题, 用问号结尾">
+                                <input type="text" id="title" placeholder="标题: 一句话说清楚问题, 用问号结尾" required="required">
                             </div>
                             <div id="editormd">
                                 <textarea style="display:none;"></textarea>
                             </div>
                             <div class="field">
-                                <select class="ui dropdown">
+                                <select class="ui dropdown" id="category">
                                     <option value="">请选择分类</option>
                                     <c:forEach items="${questionCategories}" var="item">
                                         <option value="${item.id}">${item.name}</option>
@@ -68,6 +68,7 @@
                 height: 640,
                 watch: false,
                 path: "../../static/editormd/lib/",
+                saveHTMLToTextarea : true,
                 placeholder: "详细描述问题内容",
                 toolbarIcons: function () {
                     return [
@@ -80,6 +81,24 @@
                 }
             });
         });
+
+        /* 表单提交 */
+        $("form").submit(function () {
+            var hrefVal = $(this).attr("action");
+            var titleVal = $("#title").val();
+            var contentVal = testEditor.getHTML();
+            var categoryVal = $("#category").val();
+            var data = {"title": titleVal, "content": contentVal, "category.id": categoryVal};
+            if (categoryVal == "") {
+                alert("请选择分类");
+                return false;
+            }
+            $.post(hrefVal, data, function () {
+                window.location = "/site/operationResult.action";
+            });
+            return false;
+        });
+        
     });
 </script>
 </html>

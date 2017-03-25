@@ -26,20 +26,10 @@ public class QuestionService extends BaseService<Question> {
         super.setDao(dao);
     }
 
-    @Override
-    public Question get(Integer id) {
-        Question question = super.get(id);
-        Hibernate.initialize(question.getCategory());
-        Hibernate.initialize(question.getUser());
-        Hibernate.initialize(question.getComments());
-        Hibernate.initialize(question.getComments());
-        for (Comment comment : question.getComments())
-            Hibernate.initialize(comment.getUser());
-        return question;
-    }
-
     /**
-     * 根据提问时间排序 (最新提问)
+     * 根据提问时间排序分页获取数据
+     * @param page
+     * @return
      */
     public Page<Question> listLast(Page<Question> page) {
         // 1. 计算总条数
@@ -57,53 +47,19 @@ public class QuestionService extends BaseService<Question> {
     }
 
     /**
-     * 根据回答数排序 (热门回答)
-     */
-    public Page<Question> listHotAnswer(Page<Question> page) {
-        // 1. 计算总条数
-        Integer totalItem = questionDAO.countHotAnswer();
-        page.setTotalItem(totalItem);
-
-        // 2. 分页获取数据
-        List<Question> list = questionDAO.listPageSortByAnswer(page);
-        for (Question question : list) {
-            Hibernate.initialize(question.getUser());
-            Hibernate.initialize(question.getCategory());
-        }
-        page.setList(list);
-        return page;
-    }
-
-    /**
-     * 没有被回答的问题 (时间倒叙)
-     */
-    public Page<Question> listNoAnswer(Page<Question> page) {
-        // 1. 计算总条数
-        Integer totalItem = questionDAO.countNoAnswer();
-        page.setTotalItem(totalItem);
-
-        // 2. 分页获取数据
-        List<Question> list = questionDAO.listPageNoAnswer(page);
-        for (Question question : list) {
-            Hibernate.initialize(question.getUser());
-            Hibernate.initialize(question.getCategory());
-        }
-        page.setList(list);
-        return page;
-    }
-
-    /**
      * 我的提问
      */
     public Page<Question> listMyQuestion(Page<Question> page, User user) {
-        Integer totalItem = questionDAO.countMyQuestion(user.getId());
+        Integer totalItem = questionDAO.countMyQuestion(user);
         page.setTotalItem(totalItem);
         List<Question> list = questionDAO.listPageMyQuestion(page, user);
         page.setList(list);
         return page;
     }
 
-    /* 列出该分类下的所有问题, 按时间排序 */
+    /**
+     * 按时间排序列出该分类下的所有问题
+     */
     public Page<Question> listLastWithCategory(Page<Question> page, QuestionCategory questionCategory) {
         Integer totalItem = questionDAO.countLastWithCategory(questionCategory);
         page.setTotalItem(totalItem);
@@ -116,29 +72,4 @@ public class QuestionService extends BaseService<Question> {
         return page;
     }
 
-    /* 列出该分类下的所有问题, 按热度倒叙 */
-    public Page<Question> listHotWithCategory(Page<Question> page, QuestionCategory questionCategory) {
-        Integer totalItem = questionDAO.countHotWithCategory(questionCategory);
-        page.setTotalItem(totalItem);
-        List<Question> list = questionDAO.listPageWithCategorySortByHot(page, questionCategory);
-        page.setList(list);
-        for (Question question : list) {
-            Hibernate.initialize(question.getUser());
-            Hibernate.initialize(question.getCategory());
-        }
-        return page;
-    }
-
-    /* 列出该分类下的所有问题, 按时间排序 */
-    public Page<Question> listNoWithCategory(Page<Question> page, QuestionCategory questionCategory) {
-        Integer totalItem = questionDAO.countNoWithCategory(questionCategory);
-        page.setTotalItem(totalItem);
-        List<Question> list = questionDAO.listPageWithCategorySortByNo(page, questionCategory);
-        page.setList(list);
-        for (Question question : list) {
-            Hibernate.initialize(question.getUser());
-            Hibernate.initialize(question.getCategory());
-        }
-        return page;
-    }
 }

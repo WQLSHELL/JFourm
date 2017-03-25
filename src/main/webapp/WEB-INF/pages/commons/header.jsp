@@ -16,7 +16,6 @@
             </a>
 
             <div class="right menu">
-                <!-- 登录/注册 -->
                 <c:if test="${empty(sessionScope.user)}">
                     <div class="item">
                         <div class="ui medium buttons">
@@ -46,36 +45,6 @@
     <div class="three wide column"></div>
 </div>
 
-<%-- 从 Session 中取值 --%>
-<!-- 问题分类栏 -->
-<div class="brown row" style="padding: 0px;">
-    <div class="three wide column"></div>
-    <div class="ten wide column">
-        <div class="ui secondary menu" style="height: 34px;">
-            <a href="/" class="item" style="padding: 10px 5px; color: pink">
-                <i class="home icon"></i>
-                Home
-            </a>
-            <span style="padding: 10px 5px; color: pink">|</span>
-
-            <c:forEach items="${sessionScope.questionCategories}" var="item">
-                <a href="/question/listLastCategoryQuestion.action?categoryId=${item.id}" class="item" style="padding: 10px 5px; color: pink">
-                    ${item.name}
-                </a>
-            </c:forEach>
-
-            <%-- 查看更多问题分类 --%>
-            <c:if test="${not empty(sessionScope.questionCategories)}">
-                <div class="right menu">
-                    <a href="/questionCategory/listAll.action" class="item" style="padding: 10px 5px; color: pink">More</a>
-                </div>
-            </c:if>
-
-        </div>
-    </div>
-    <div class="three wide column"></div>
-</div>
-
 <script>
     $(function () {
 
@@ -87,6 +56,7 @@
             $("#headLineModel").addClass("active");
         }
 
+        /* 点击提问题的时候，验证用户登录 */
         $("#headAskQuestion").click(function () {
             $.ajax({
                 url: "/site/user/isLogin.action",
@@ -101,6 +71,8 @@
                 }
             });
         });
+
+        /* 点击提头条的时候，验证用户登录 */
         $("#headSendHeadLine").click(function () {
             $.ajax({
                 url: "/site/user/isLogin.action",

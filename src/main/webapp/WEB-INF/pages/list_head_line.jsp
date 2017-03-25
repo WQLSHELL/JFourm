@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: WuQinglong
-  Date: 2017/3/10
-  Time: 15:35
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -21,17 +14,17 @@
 
 <div class="ui grid">
 
-    <%@ include file="commons/header_no_category.jsp" %>
+    <%@ include file="commons/header.jsp" %>
 
-    <%-- 从 Request 中取值 --%>
-    <!-- List 问题 -->
-    <div class="row">
+    <div class="row" style="padding: 0px;background-color: white;">
+        <div class="sixteen wide column">
+            <div class="ui divider" style="margin: 0px auto;"></div>
+        </div>
+    </div>
+
+    <div class="row" style="background-color: white;">
         <div class="three wide column"></div>
         <div class="seven wide column">
-            <div class="ui secondary pointing menu">
-                <a href="/headLine/listLast.action" class="item" id="lastHeadLine">最新的</a>
-                <a href="/headLine/listHot.action" class="item" id="hotHeadLine">最热的</a>
-            </div>
 
             <c:if test="${not empty(page.list)}">
                 <div class="ui segment">
@@ -55,19 +48,19 @@
                         <div class="ui buttons">
                             <c:if test="${page.totalPage != 0}">
                                 <c:if test="${page.hasPrev()}">
-                                    <a href="${href}?pageNo=1" style="color: #646465;">
+                                    <a href="/headLine/listLast.action?pageNo=1" style="color: #646465;">
                                         <button class="ui button">首页</button>
                                     </a>
-                                    <a href="${href}?pageNo=${page.prevPageNo}" style="color: #646465;">
+                                    <a href="/headLine/listLast.action?pageNo=${page.prevPageNo}" style="color: #646465;">
                                         <button class="ui button">上一页</button>
                                     </a>
                                 </c:if>
                                 <button class="ui button disabled" style="color: black;">当前第${page.pageNo}页</button>
                                 <c:if test="${page.hasNext()}">
-                                    <a href="${href}?pageNo=${page.nextPageNo}" style="color: #646465;">
+                                    <a href="/headLine/listLast.action?pageNo=${page.nextPageNo}" style="color: #646465;">
                                         <button class="ui button">下一页</button>
                                     </a>
-                                    <a href="${href}?pageNo=${page.totalPage}" style="color: #646465;">
+                                    <a href="/headLine/listLast.action?pageNo=${page.totalPage}" style="color: #646465;">
                                         <button class="ui button">末页</button>
                                     </a>
                                 </c:if>
@@ -103,13 +96,6 @@
 <script>
 
     $(function () {
-
-        var typeVal = "${type}";
-        if (typeVal == "last") {
-            $("#lastHeadLine").addClass("active");
-        } else {
-            $("#hotHeadLine").addClass("active");
-        }
 
         $("#sendHeadLine").click(function () {
             $.ajax({

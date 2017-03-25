@@ -34,7 +34,9 @@ public class SiteController extends BaseController {
     @Autowired
     private HeadLineService headLineService;
 
-    /* 访问网站主页 */
+    /**
+     * 访问网站主页
+     */
     @RequestMapping("/index.action")
     public String index(ModelMap modelMap) {
         // 1. 获取最新的提问
@@ -48,16 +50,18 @@ public class SiteController extends BaseController {
         modelMap.addAttribute("questionCategories", questionCategoryList);
 
         // ------------------- 放入 Session 中, 用户登录之后移除
-        // 3. 获取最新头条
+        // 3. 获取最新头条, 前 10 个
         List<HeadLine> headLines = headLineService.listTopTen();
         modelMap.addAttribute("headLines", headLines);
 
         modelMap.addAttribute("modelType", "questionModel"); // 设置默认模块为 问答模块
-        modelMap.addAttribute("href", "/question/listLast.action");
+        modelMap.addAttribute("href", "/question/listLast.action"); // 设置下一页的链接
         return "/index";
     }
 
-    /* 激活邮箱账号 */
+    /**
+     * 激活邮箱账号
+     */
     @RequestMapping("/email/activateEmail.action")
     public String activateAccount(String emailSign, ModelMap modelMap) {
         try {
@@ -69,7 +73,9 @@ public class SiteController extends BaseController {
         return "/user/login/active_result";
     }
 
-    /* 验证用户是否登录 */
+    /**
+     * 验证用户是否登录
+     */
     @RequestMapping("/user/isLogin.action")
     @ResponseBody
     public String userIsLogin(ModelMap modelMap) {
@@ -81,12 +87,23 @@ public class SiteController extends BaseController {
         return JSON.toJSONString(response);
     }
 
-    /* 查看网站状态 */
+    /**
+     * 查看网站状态
+     */
     @RequestMapping("/siteStatus.action")
     public String siteStatus(ModelMap modelMap) {
         // TODO 获取操作系统信息
         // TODO 获取用户量，问题数， 头条数，等等
         return "/back/site_status";
+    }
+
+    /**
+     * 跳转到操作结果页面
+     */
+    @RequestMapping("/operationResult.action")
+    public String optionResult(ModelMap modelMap) {
+        modelMap.addAttribute("message", "操作成功");
+        return "/success";
     }
 
 }

@@ -8,22 +8,26 @@
     <script src="/static/js/jquery.js" charset="UTF-8"></script>
     <script src="/static/js/semantic.min.js" charset="UTF-8"></script>
 </head>
-<body>
+<body style="margin-top: 5px;background-color: #fafafa;">
 <div class="ui grid">
 
     <%@ include file="commons/header.jsp"%>
 
+    <div class="row" style="padding: 0px;background-color: white;">
+        <div class="sixteen wide column">
+            <div class="ui divider" style="margin: 0px auto;"></div>
+        </div>
+    </div>
+
     <div class="row" style="margin-top: 200px;">
 
-        <div class="four wide column"></div>
-        <div class="three wide column"></div>
-        <div class="two wide column">
-            <div class="ui attached message">
-                <h1>操作成功</h1>
+        <div class="five wide column"></div>
+        <div class="six wide column">
+            <div class="ui attached message" style="text-align: center;">
+                <h1>${message}</h1>
             </div>
         </div>
-        <div class="three wide column"></div>
-        <div class="four wide column"></div>
+        <div class="five wide column"></div>
     </div>
 
 </div>

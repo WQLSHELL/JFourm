@@ -14,20 +14,21 @@
 
 <div class="ui grid">
 
-    <%@ include file="commons/header_no_category.jsp" %>
+    <%@ include file="commons/header.jsp" %>
 
-    <%-- 从 Request 中取值 --%>
-    <!-- List 问题 -->
-    <div class="row">
+    <div class="row" style="padding: 0px;background-color: white;">
+        <div class="sixteen wide column">
+            <div class="ui divider" style="margin: 0px auto;"></div>
+        </div>
+    </div>
+
+    <div class="row" style="background-color: white;">
         <div class="three wide column"></div>
         <div class="seven wide column">
             <div class="ui secondary pointing menu">
                 <a class="active item">发头条</a>
             </div>
             <div class="ui segment">
-                <div class="ui tabular menu">
-                    <a class="active item">发链接</a>
-                </div>
                 <div class="ui message">
                     <p>
                         有价值的内容 + 概括性的标题 = 一篇受欢迎的头条 <br>
@@ -35,22 +36,18 @@
                     </p>
                 </div>
                 <div>
-                    <form action="" method="post" class="ui form">
+                    <form action="/headLine/saveHeadline.action" method="post" class="ui form">
                         <div class="field">
                             <label>网址*</label>
-                            <input type="text" name="" placeholder="请输入网址">
+                            <input type="url" name="url" placeholder="请输入网址">
                         </div>
                         <div class="field">
                             <label>连接标题*</label>
-                            <input type="text" name="" placeholder="请输入标题">
-                        </div>
-                        <div class="field">
-                            <label>频道*</label>
-                            <input type="text" name="" placeholder="选择频道">
+                            <input type="text" name="title" placeholder="请输入标题">
                         </div>
                         <div class="field">
                             <label>推荐语或内容描述*</label>
-                            <textarea rows="5" placeholder="分享亮点, 槽点, 你的观点或内容描述"></textarea>
+                            <textarea name="description" rows="5" placeholder="分享亮点, 槽点, 你的观点或内容描述"></textarea>
                         </div>
                         <button class="ui button">提交</button>
                     </form>

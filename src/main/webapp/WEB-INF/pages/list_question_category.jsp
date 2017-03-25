@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: WuQinglong
-  Date: 2017/3/10
-  Time: 16:56
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <html lang="en">
 <head>
@@ -21,10 +14,16 @@
 
     <%@ include file="commons/header.jsp" %>
 
+    <div class="row" style="padding: 0px auto;">
+        <div class="sixteen wide column">
+            <div class="ui divider" style="margin: 0px auto;"></div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="three wide column"></div>
         <div class="ten wide column">
-            <div style="margin-bottom: 10px;">
+            <div class="ui segment" style="margin-bottom: 10px;">
                 <h2>
                     类别 <br>
                     <small>类别是最有效的内容组织形式，正确的使用标签能更快的发现和解决你的问题</small>
@@ -62,8 +61,10 @@
                 <c:forEach items="${questionCategories}" var="item">
                     <div class="card">
                         <div class="content">
-                                <%-- TODO 列出该分类下的所有问题 --%>
-                            <div class="header"><a href="">${item.name}</a></div>
+                                <%-- 列出该分类下的所有问题 --%>
+                            <div class="header">
+                                <a href="/question/listLastCategoryQuestion.action?categoryId=${item.id}">${item.name}</a>
+                            </div>
                             <div class="description">
                                     ${item.description}
                             </div>
@@ -85,34 +86,47 @@
 </body>
 <script>
     $(function () {
-        /* TODO 击关注事件 */
+        /* 关注事件 */
         $(".attention").click(function () {
-            if ("${login}" == "false") {
-                alert("请登录之后再关注.");
-                return false;
-            }
+
             var $this = $(this);
-            var idVal = $this.attr("id");
-            var nameVal = $this.attr("name");
+
+            // 验证用户是否登录
+            var isLogin = "false";
             $.ajax({
-                url: "/user/attention/addQuestionCategory.action",
+                url: "/site/user/isLogin.action",
                 type: "post",
-                data: {"id": idVal},
-                success: function () {
-                    alert("关注成功.");
-                    $this.children("div").addClass("disabled");
-                    $("#myTag").insertAfter("<div class='ui attached message'><div class='ui image label'>" +
-                        nameVal + " <i class='delete icon' id='" + idVal + "'></i></div> </div>");
+                sync: "true",
+                success: function (data) {
+                    var result = eval("(" + data + ")");
+                    isLogin = result.status;
+
+                    if (isLogin == "false") {
+                        alert("请登录之后再操作");
+                        return false;
+                    }
+
+                    var idVal = $this.attr("id");
+                    var nameVal = $this.attr("name");
+                    $.ajax({
+                        url: "/user/attention/addQuestionCategory.action",
+                        type: "post",
+                        data: {"id": idVal},
+                        success: function () {
+                            alert("关注成功.");
+                            $this.children("div").addClass("disabled");
+                            $("#myTag").insertAfter("<div class='ui attached message'><div class='ui image label'>" +
+                                nameVal + " <i class='delete icon' id='" + idVal + "'></i></div> </div>");
+                        }
+                    });
                 }
             });
+
             return false;
         });
+
         /* TODO 点击删除事件 */
         $(".delete.icon").click(function () {
-            if ("${login}" == "false") {
-                alert("请登录之后再关注.");
-                return false;
-            }
             var $this = $(this);
             var idVal = $this.attr("id");
             $.ajax({

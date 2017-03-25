@@ -22,7 +22,6 @@
 
     <%@ include file="commons/header.jsp"%>
 
-    <%-- 从 Request 中取值 --%>
     <div class="row">
         <div class="three wide column"></div>
         <div class="seven wide column">

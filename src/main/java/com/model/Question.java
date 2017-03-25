@@ -17,12 +17,11 @@ public class Question {
     private String content; // 问题内容
     private Timestamp submitTime;   // 问题提交时间
     private Integer questionState; // 问题状态: 1:开放; 0:关闭
-    private Integer viewNum;  //  浏览量
     private Integer answerNum;   //  回答数
     private Integer attentionNum;   // 关注数
 
-    private QuestionCategory category;  // 问题分类
     private User user;  // 提问者
+    private QuestionCategory category;  // 问题分类
 
     private Set<User> users = new HashSet<>(); // 被哪些人关注
     private Set<Comment> comments = new HashSet<>();    //　评论
@@ -73,15 +72,6 @@ public class Question {
         this.questionState = questionState;
     }
 
-    @Column(name = "view_num")
-    public Integer getViewNum() {
-        return viewNum;
-    }
-
-    public void setViewNum(Integer viewNum) {
-        this.viewNum = viewNum;
-    }
-
     @Column(name = "answer_num")
     public Integer getAnswerNum() {
         return answerNum;
@@ -102,7 +92,7 @@ public class Question {
 
     /* w问题分类 */
     @ManyToOne(targetEntity = QuestionCategory.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", nullable = false)
     public QuestionCategory getCategory() {
         return category;
     }
@@ -113,7 +103,7 @@ public class Question {
 
     /* 问题提出者 */
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     public User getUser() {
         return user;
     }

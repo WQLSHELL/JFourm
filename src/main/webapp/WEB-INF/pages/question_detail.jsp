@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: WuQinglong
-  Date: 2017/3/11
-  Time: 17:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en">
@@ -21,7 +14,8 @@
 <body>
 <div class="ui grid">
 
-    <%@ include file="commons/header.jsp"%>
+    <%@ include file="commons/header.jsp" %>
+    <%@ include file="commons/question_categroy_menu.jsp" %>
 
     <%-- 该问题的 ID --%>
     <input type="hidden" id="id" value="${question.id}">
@@ -33,7 +27,7 @@
         <div class="seven wide column">
             <div style="margin-top: 10px;">
                 <!-- 问题标题 -->
-                <span style="font-size: x-large">${question.title}</span> <br>
+                <span style="font-size: x-large;margin-left: 10px;">${question.title}</span> <br>
                 <!-- 问题类别 -->
                 <label class="ui label" style="margin: 10px 10px;">
                     <a href="/questionCategory/listAllQuestion.action?id=${question.category.id}"
@@ -50,12 +44,11 @@
         <div class="three wide column">
             <div style="margin-top: 20px;">
                 <a href="javascript:void(0);">
-                    <button class="ui button" id="addFavorites">收藏</button>
+                    <button class="ui button" id="addFavorites">关注</button>
                 </a>
                 &nbsp;&nbsp;
                 <span style="font-size: medium">${question.attentionNum}</span> 关注
-                &nbsp;&nbsp;
-                <span style="font-size: medium">${question.viewNum}</span> 浏览
+
             </div>
         </div>
         <div class="three wide column"></div>
@@ -67,8 +60,8 @@
         <div class="seven wide column">
 
             <!-- 问题描述 -->
-            <div>
-                <p>${question.content}</p>
+            <div class="ui segment" style="width: 100%;">
+                ${question.content}
             </div>
             <div style="margin-top: 20px;">
                 <span><fmt:formatDate value="${question.submitTime}" pattern="yyyy-MM-dd" /> 提问</span>
@@ -112,18 +105,19 @@
             </div>
 
             <%-- 评论 --%>
-            <div class="ui card" style="width: 100%;">
-                <div class="content">
-                    <div class="header">撰写答案</div>
-                </div>
-                <div class="content">
-                    <div id="editormd">
-                        <textarea style="display:none;"></textarea>
+            <c:if test="${not empty(user)}">
+                <div class="ui card" style="width: 100%;">
+                    <div class="content">
+                        <div class="header">撰写答案</div>
                     </div>
-                    <button class="ui primary button right floated" id="submit">提交</button>
+                    <div class="content">
+                        <div id="editormd">
+                            <textarea id="commentContent" style="display:none;"></textarea>
+                        </div>
+                        <button class="ui primary button right floated" id="submit">提交</button>
+                    </div>
                 </div>
-            </div>
-
+            </c:if>
         </div>
 
         <!-- 侧边栏 -->
@@ -157,33 +151,16 @@
     var testEditor; // 声明MD编辑器
     $(function () {
 
-        /* 评论点赞 */
-        $(".ui.button.like").click(function () {
-            var $this = $(this);
-            var idVal = $this.attr("id");
-            $.ajax({
-                url: "/comment/likeComment.action",
-                type: "post",
-                data: {"id":idVal},
-                success: function () {
-                    /* TODO 处理一个用户只能赞一次 */
-                    var likeNum = $this.next().html();
-                    $this.next().html(parseInt(likeNum) + 1);
-                }
-            });
-
-        });
-
         /* 进行评论 */
         $("#submit").click(function () {
-            var contentVal = testEditor.getHTML();
             var idVal = $("#id").val();
+            var contentVal = testEditor.getHTML();
             $.ajax({
                 url: "/comment/addComment.action",
                 type: "post",
                 data: {"questionId":idVal, "content": contentVal},
                 success: function (result) {
-                    alert(result.message);
+                    alert("评论成功");
                     window.location.reload(); // 刷新页面
                 }
             });
@@ -211,7 +188,8 @@
             width: "100%",
             height: 640,
             path: "../../static/editormd/lib/",
-            placeholder: "详细描述问题内容",
+            saveHTMLToTextarea : true,
+            placeholder: "填写答案",
             watch : false,
             toolbarIcons: function () {
                 return [

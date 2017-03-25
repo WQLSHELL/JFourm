@@ -38,8 +38,6 @@ public class UserLoginService extends BaseService<UserLogin> {
 
     /**
      * 验证用户登录信息是否正确
-     * 不正确: 抛异常
-     * 正确: 没反应
      */
     public void validateUserLoginInfo(UserLogin userLogin) throws UserLoginException {
         if (userLogin == null) {
@@ -51,6 +49,8 @@ public class UserLoginService extends BaseService<UserLogin> {
             throw new UserLoginException("用户不存在.");
         } else if (dbUserLogin.getEmailValidated() == 0) {
             throw new UserLoginException("邮箱未通通过验证, 请登录邮箱验证.");
+        } else if (dbUserLogin.getEnabled() == 0) {
+            throw new UserLoginException("该账户已经被管理员禁用, 请联系管理员.");
         } else {
             // 验证密码
             String salt = PropertiesUtil.getStringValue(WebConstants.ENCRYPTION_SALT);
@@ -69,27 +69,15 @@ public class UserLoginService extends BaseService<UserLogin> {
     }
 
     /**
-     * 用户注册
-     */
-    @Transactional
-    public void save(UserLogin userLogin) {
-        String salt = PropertiesUtil.getStringValue(WebConstants.ENCRYPTION_SALT);
-        String passwordSalt = userLogin.getPassword() + salt;
-        String passwordMD5 = MD5Util.generateMD5(passwordSalt);
-        userLogin.setPassword(passwordMD5);
-        userLogin.setEmailValidated(0);
-        userLogin.setUserSource(1);
-        super.save(userLogin);
-    }
-
-    /**
      * 激活邮箱用户
      */
     @Transactional
     public void activeEmail(String emailSign) throws UserLoginException {
         UserLogin userLogin = userLoginDAO.getByEmailSign(emailSign);
         if (userLogin == null) {
-            throw new UserLoginException("邮箱签名不正确!");
+            throw new UserLoginException("邮箱签名不正确, 激活失败!");
+        } else if (userLogin.getEmailValidated() == 1) {
+            throw new UserLoginException("邮箱账户已经激活, 不需要重复激活!");
         }
         userLogin.setEmailValidated(1);
         super.update(userLogin);

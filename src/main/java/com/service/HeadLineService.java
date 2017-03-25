@@ -24,18 +24,9 @@ public class HeadLineService extends BaseService<HeadLine> {
 
     /* 获取最新的头条 */
     public Page<HeadLine> listLast(Page<HeadLine> page) {
-        Integer totalItem = headLineDAO.countAll();
+        Integer totalItem = headLineDAO.countPassed();
         page.setTotalItem(totalItem);
         List<HeadLine> list = headLineDAO.listPageSortByLast(page);
-        page.setList(list);
-        return page;
-    }
-
-    /* 获取最热的头条 */
-    public Page<HeadLine> listHot(Page<HeadLine> page) {
-        Integer totalItem = headLineDAO.countHot();
-        page.setTotalItem(totalItem);
-        List<HeadLine> list = headLineDAO.listPageSortByHot(page);
         page.setList(list);
         return page;
     }

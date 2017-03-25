@@ -15,18 +15,16 @@
     <script src="/static/js/jquery.js" charset="UTF-8"></script>
     <script src="/static/js/semantic.min.js" charset="UTF-8"></script>
 </head>
-<body style="margin-top: 5px;">
+<body style="margin-top: 100px;">
 
 <div class="ui grid">
-
-    <%@ include file="../../commons/header.jsp"%>
 
     <div class="row">
         <div class="three wide column"></div>
         <div class="ten wide column">
             <div style="text-align: center; font-size: large;">
                 <c:if test="${errorMsg != null}">
-                    <span style="color: red;">邮箱签名不正确, 激活失败!</span>
+                    <span style="color: red;">${errorMsg}</span>
                 </c:if>
                 <c:if test="${errorMsg == null}">
                     账户激活成功, <a href="/user/login/login.action" class="ui button">立即登录</a>

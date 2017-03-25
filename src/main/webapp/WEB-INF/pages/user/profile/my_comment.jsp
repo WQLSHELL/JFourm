@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,12 +18,20 @@
     </div>
     <div class="content">
         <table class="ui celled table">
+            <thead>
+            <tr>
+                <th>标题</th>
+                <th>回答数</th>
+                <th>回答时间</th>
+                <th>操作</th>
+            </tr>
+            </thead>
             <tbody>
                 <c:forEach items="${page.list}" var="item">
                     <tr>
-                        <td><span class="ui label">${item.question.answerNum} 回答</span></td>
                         <td><a href="">${item.question.title}</a></td>
-                        <td>${item.question.submitTime}</td>
+                        <td><span class="ui label">${item.question.answerNum} 回答</span></td>
+                        <td><fmt:formatDate value="${item.question.submitTime}" pattern="yyyy-MM-dd HH:mm" /></td>
                         <td><a class="ui label delete" target="/comment/deleteComment.action?commentId=${item.id}">删除评论</a></td>
                     </tr>
                 </c:forEach>

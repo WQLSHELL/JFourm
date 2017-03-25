@@ -32,7 +32,6 @@ public class TestQuestionService {
             question.setTitle("问题标题" + i);
             question.setContent("问题内容");
             question.setQuestionState(1);
-            question.setViewNum(0);
             question.setAnswerNum(0);
             question.setAttentionNum(0);
             question.setCategory(questionCategory);

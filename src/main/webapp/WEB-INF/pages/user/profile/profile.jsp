@@ -50,26 +50,6 @@
                     <input type="text" name="currentTown" placeholder="现居住地" value="${user.currentTown}">
                 </div>
             </div>
-            <div class="two fields">
-                <div class="field">
-                    <label>毕业院校</label>
-                    <input type="text" name="school" placeholder="毕业院校" value="${user.school}">
-                </div>
-                <div class="field">
-                    <label>专业</label>
-                    <input type="text" name="major" placeholder="专业" value="${user.major}">
-                </div>
-            </div>
-            <div class="two fields">
-                <div class="field">
-                    <label>所在公司</label>
-                    <input type="text" name="company" placeholder="所在公司" value="${user.company}">
-                </div>
-                <div class="field">
-                    <label>职位</label>
-                    <input type="text" name="job" placeholder="职位" value="${user.job}">
-                </div>
-            </div>
             <button type="submit" class="ui primary button" id="save">保存个人信息</button>
             <button type="button" class="ui button" id="modify">修改个人信息</button>
         </form>

@@ -1,6 +1,5 @@
 package com.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.model.Comment;
 import com.model.Question;
 import com.model.User;
@@ -27,14 +26,6 @@ public class CommentController extends BaseController {
     @Autowired
     private QuestionService questionService;
 
-    /* 给评论点赞 */
-    @RequestMapping("/likeComment.action")
-    @ResponseBody
-    public String likeQuestion(Comment comment) {
-        commentService.addLikeNum(comment);
-        return JSON.toJSONString(response);
-    }
-
     /* 添加评论 */
     @RequestMapping("/addComment.action")
     @ResponseBody
@@ -43,20 +34,17 @@ public class CommentController extends BaseController {
         Question question = questionService.get(questionId);
         Comment comment = new Comment();
         comment.setContent(content);
-        comment.setLikeNum(0);
         comment.setSubmitTime(new Timestamp(System.currentTimeMillis()));
         comment.setUser(user);
         comment.setQuestion(question);
         commentService.save(comment);
 
-        response.setStatus(true);
-        response.setMessage("评论成功.");
-        return JSON.toJSONString(response);
+        return "success";
     }
 
     /* 我的评论 */
     @RequestMapping("/listMyComment.action")
-    public String listMyQuestion(@RequestParam(name = "pageNo", required = false) Integer pageNo, ModelMap modelMap) {
+    public String listMyComments(@RequestParam(name = "pageNo", required = false) Integer pageNo, ModelMap modelMap) {
         Page<Comment> page;
         if (pageNo == null) {
             page = new Page<>(1);
@@ -64,16 +52,16 @@ public class CommentController extends BaseController {
             page = new Page<>(pageNo);
         }
         User user = (User) modelMap.get("user");
-        page = commentService.listMyAnswers(user, page);
+        page = commentService.listMyComments(user, page);
         modelMap.addAttribute("page", page);
-        return "/user/profile/my_answer";
+        return "/user/profile/my_comment";
     }
 
     /* 删除评论 */
     @RequestMapping("/deleteComment.action")
     @ResponseBody
-    public String deleteComment (Integer commentId){
-        Comment comment = commentService.get(commentId);
+    public String deleteComment (Comment comment){
+        comment = commentService.get(comment.getId());
         commentService.delete(comment);
         return "success";
     }

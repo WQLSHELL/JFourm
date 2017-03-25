@@ -25,7 +25,6 @@ public class TestCommentService {
         question.setId(2);
         Comment comment = new Comment();
         comment.setContent("");
-        comment.setLikeNum(0);
         comment.setQuestion(question);
         comment.setUser(user);
         commentService.save(comment);
