@@ -23,11 +23,11 @@
             </tr>
             <tr>
                 <td class="active">操作系统</td>
-                <td>windows 7 专业版</td>
+                <td>${osName}</td>
                 <td class="active">JDK Version</td>
-                <td>Sun JDK 1.8</td>
-                <td class="active">JDK Version</td>
-                <td>Sun JDK 1.8</td>
+                <td>${javaVersion}</td>
+                <td class="active">数据库</td>
+                <td>MySQL-5.7.17</td>
             </tr>
 
             <tr>

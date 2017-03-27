@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -147,5 +148,15 @@ public class UserService extends BaseService<User> {
         user.getAttentionQuestions().remove(question);
         question.getUsers().remove(user);
         userDAO.update(user);
+    }
+
+    public List<User> listUsers() {
+        List<User> users = userDAO.listAll();
+        for (User user : users) {
+            Hibernate.initialize(user.getComments());
+            Hibernate.initialize(user.getAskedQuestions());
+            Hibernate.initialize(user.getHeadLines());
+        }
+        return users;
     }
 }

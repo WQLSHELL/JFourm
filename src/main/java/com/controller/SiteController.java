@@ -11,6 +11,7 @@ import com.service.QuestionService;
 import com.service.UserLoginService;
 import com.system.utils.EmailUtil;
 import com.system.web.Page;
+import org.apache.commons.lang.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -94,8 +95,13 @@ public class SiteController extends BaseController {
     public String siteStatus(ModelMap modelMap) {
         // TODO 获取操作系统信息
         // TODO 获取用户量，问题数， 头条数，等等
+        modelMap.addAttribute("javaVersion", SystemUtils.JAVA_VERSION);
+        modelMap.addAttribute("osName", SystemUtils.OS_NAME);
+
         return "/back/site_status";
     }
+
+
 
     /**
      * 跳转到操作结果页面

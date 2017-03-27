@@ -43,6 +43,22 @@ public class QuestionController extends BaseController {
     }
 
     /**
+     * 通过最新提问, 进行翻页
+     */
+    @RequestMapping("/listLastBack.action")
+    public String listLastQuestionBack(@RequestParam(name = "pageNo", required = false) Integer pageNo, ModelMap modelMap) {
+        Page<Question> page;
+        if (pageNo == null) {
+            page = new Page<>(1);
+        } else {
+            page = new Page<>(pageNo);
+        }
+        page = questionService.listLast(page);
+        modelMap.addAttribute("page", page);
+        return "/back/list_question";
+    }
+
+    /**
      * 获取单个问题的详细内容
      */
     @RequestMapping("/questionDetail.action")

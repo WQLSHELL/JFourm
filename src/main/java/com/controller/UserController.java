@@ -258,7 +258,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/listUsers.action")
     public String listUsers(ModelMap modelMap) {
-        List<User> users = userService.listAll();
+        List<User> users = userService.listUsers();
         modelMap.addAttribute("users", users);
         return "/back/list_user";
     }

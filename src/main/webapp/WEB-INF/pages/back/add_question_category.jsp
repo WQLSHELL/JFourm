@@ -20,7 +20,11 @@
         <form action="/questionCategory/doAddCategory.action" method="post" class="ui form">
             <div class="field">
                 <label>问题分类名称</label>
-                <input type="text" name="name" />
+                <input type="text" name="name" placeholder="问题分类名" />
+            </div>
+            <div class="field">
+                <label>问题描述</label>
+                <input type="text" name="description" placeholder="问题描述" />
             </div>
             <button class="ui button" type="submit">保存</button>
         </form>

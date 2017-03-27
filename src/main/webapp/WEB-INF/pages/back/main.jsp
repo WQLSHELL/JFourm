@@ -32,10 +32,10 @@
                 <a target="/site/siteStatus.action" class="item">
                     网站状态
                 </a>
-                <a target="/question/listAll.action" class="item">
+                <a target="/question/listLastBack.action" class="item">
                     查看问题
                 </a>
-                <a target="/user/listAll.action" class="item">
+                <a target="/user/listUsers.action" class="item">
                     查看用户
                 </a>
                 <a target="/headLine/listUnReview.action" class="item">

@@ -26,14 +26,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td><a href="">头条标题</a></td>
-                <td>Tom猫</td>
-                <td>2017-01-01</td>
-                <td>
-                    <a class="ui label review" target="/headline/reviewPassed.action?headLineId=12">通过</a>
-                </td>
-            </tr>
+            <c:forEach items="${headLines}" var="item">
+                <tr>
+                    <td><a href="${item.url}">${item.title}</a></td>
+                    <td>${item.user.nickName}</td>
+                    <td><fmt:formatDate value="${item.submitTime}" pattern="yyyy-MM-dd HH:mm" /></td>
+                    <td>
+                        <a class="ui label review" target="/headline/reviewPassed.action?headLineId=${item.id}">通过</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
         </table>
     </div>

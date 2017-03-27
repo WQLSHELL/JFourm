@@ -27,6 +27,9 @@ public class AdminService extends BaseService<Admin> {
     /* 验证管理员登录信息 */
     public void validateInfo(Admin admin) throws AdminException {
         Admin dbAdmin = adminDAO.getByUserName(admin.getUserName());
+        if (dbAdmin == null) {
+            throw new AdminException("无此管理员.");
+        }
         String salt = PropertiesUtil.getStringValue(WebConstants.ENCRYPTION_SALT);
         String generateMD5 = MD5Util.generateMD5(admin.getPassword() + salt);
         if (!dbAdmin.getPassword().equals(generateMD5)) {
